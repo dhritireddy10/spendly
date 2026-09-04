@@ -6,7 +6,11 @@
 
 <section class="hero">
     <div class="hero-inner">
+        {% if user %}
+        <div class="hero-badge">Welcome back, {{ user.name }}!</div>
+        {% else %}
         <div class="hero-badge">Free to use · No credit card needed</div>
+        {% endif %}
         <h1 class="hero-title">
             Track every rupee.<br>
             <span class="hero-title-accent">Know where it goes.</span>
