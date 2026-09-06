@@ -13,6 +13,13 @@ with app.app_context():
     seed_db()
 
 
+@app.context_processor
+def inject_current_user():
+    if session.get("user_id"):
+        return {"current_user": get_user_by_id(session["user_id"])}
+    return {"current_user": None}
+
+
 # ------------------------------------------------------------------ #
 # Routes                                                              #
 # ------------------------------------------------------------------ #
@@ -99,7 +106,33 @@ def logout():
 
 @app.route("/profile")
 def profile():
-    return "Profile page — coming in Step 4"
+    if not session.get("user_id"):
+        return redirect(url_for("login"))
+
+    user = get_user_by_id(session["user_id"])
+
+    # Hardcoded placeholder data — real queries land in a later step
+    stats = {"total_spent": 271.79, "transaction_count": 8, "top_category": "Food"}
+    transactions = [
+        {"date": "2026-09-02", "description": "Groceries", "category": "Food", "amount": 45.50},
+        {"date": "2026-09-03", "description": "Bus pass", "category": "Transport", "amount": 12.00},
+        {"date": "2026-09-05", "description": "Electricity bill", "category": "Bills", "amount": 89.99},
+        {"date": "2026-09-08", "description": "Pharmacy", "category": "Health", "amount": 30.00},
+    ]
+    categories = [
+        {"name": "Food", "amount": 67.80, "percent": 25},
+        {"name": "Bills", "amount": 89.99, "percent": 33},
+        {"name": "Transport", "amount": 12.00, "percent": 4},
+        {"name": "Health", "amount": 30.00, "percent": 11},
+    ]
+
+    return render_template(
+        "profile.html",
+        user=user,
+        stats=stats,
+        transactions=transactions,
+        categories=categories,
+    )
 
 
 @app.route("/expenses/add")

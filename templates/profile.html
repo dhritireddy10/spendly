@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Profile — Spendly{% endblock %}
+
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/profile.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="profile-page">
+    <div class="profile-container">
+
+        <div class="profile-card">
+            <div class="profile-avatar">{{ user.name[0]|upper }}</div>
+            <div class="profile-info">
+                <h1 class="profile-name">{{ user.name }}</h1>
+                <p class="profile-email">{{ user.email }}</p>
+                <p class="profile-since">Member since {{ user.created_at }}</p>
+            </div>
+        </div>
+
+        <div class="profile-stats">
+            <div class="mock-stat">
+                <span class="mock-stat-label"><i data-lucide="wallet"></i> Total spent</span>
+                <span class="mock-stat-value">${{ "%.2f"|format(stats.total_spent) }}</span>
+            </div>
+            <div class="mock-stat">
+                <span class="mock-stat-label"><i data-lucide="credit-card"></i> Transactions</span>
+                <span class="mock-stat-value">{{ stats.transaction_count }}</span>
+            </div>
+            <div class="mock-stat">
+                <span class="mock-stat-label"><i data-lucide="tag"></i> Top category</span>
+                <span class="mock-stat-value">{{ stats.top_category }}</span>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h2 class="profile-section-title"><i data-lucide="clock"></i> Recent transactions</h2>
+            <div class="profile-table-wrap">
+                <table class="profile-table">
+                    <thead>
+                        <tr>
+                            <th>Date</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th class="col-amount">Amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for tx in transactions %}
+                        <tr>
+                            <td>{{ tx.date }}</td>
+                            <td>{{ tx.description }}</td>
+                            <td><span class="category-badge" data-category="{{ tx.category|lower }}">{{ tx.category }}</span></td>
+                            <td class="col-amount">${{ "%.2f"|format(tx.amount) }}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <div class="profile-section">
+            <h2 class="profile-section-title"><i data-lucide="pie-chart"></i> Category breakdown</h2>
+            <div class="mock-bars">
+                {% for cat in categories %}
+                <div class="mock-bar-row">
+                    <span class="mock-cat">{{ cat.name }}</span>
+                    <div class="mock-bar-track">
+                        <div class="mock-bar" data-category="{{ cat.name|lower }}" style="width: {{ cat.percent }}%"></div>
+                    </div>
+                    <span class="category-amount">${{ "%.2f"|format(cat.amount) }}</span>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+    </div>
+</section>
+{% endblock %}
