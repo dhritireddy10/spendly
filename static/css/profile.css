@@ -164,6 +164,9 @@
 .category-badge[data-category="bills"] { background: var(--accent-2-light); color: var(--accent-2); }
 .category-badge[data-category="transport"] { background: var(--border-soft); color: var(--badge-blue); }
 .category-badge[data-category="health"] { background: var(--border-soft); color: var(--badge-purple); }
+.category-badge[data-category="entertainment"] { background: var(--danger-light); color: var(--danger); }
+.category-badge[data-category="shopping"] { background: var(--border-soft); color: var(--ink-soft); }
+.category-badge[data-category="other"] { background: var(--border-soft); color: var(--ink-faint); }
 
 /* Category breakdown bars */
 
@@ -175,6 +178,9 @@
 .mock-bar[data-category="bills"] { background: var(--badge-purple); }
 .mock-bar[data-category="transport"] { background: var(--badge-blue); }
 .mock-bar[data-category="health"] { background: var(--accent); }
+.mock-bar[data-category="entertainment"] { background: var(--danger); }
+.mock-bar[data-category="shopping"] { background: var(--ink-soft); }
+.mock-bar[data-category="other"] { background: var(--ink-faint); }
 
 .category-amount {
     font-size: 0.85rem;
