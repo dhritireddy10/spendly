@@ -7,6 +7,8 @@ from database.db import get_db, init_db, seed_db, create_user, get_user_by_email
 
 app = Flask(__name__)
 app.secret_key = "dev-secret-key-change-in-production"
+app.config["TEMPLATES_AUTO_RELOAD"] = True
+app.config["SEND_FILE_MAX_AGE_DEFAULT"] = 0
 
 with app.app_context():
     init_db()
