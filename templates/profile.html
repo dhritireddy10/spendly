@@ -15,7 +15,7 @@
             <div class="profile-info">
                 <h1 class="profile-name">{{ user.name }}</h1>
                 <p class="profile-email">{{ user.email }}</p>
-                <p class="profile-since">Member since {{ user.created_at }}</p>
+                <p class="profile-since">Member since {{ user.member_since }}</p>
             </div>
         </div>
 
@@ -68,7 +68,7 @@
                     <div class="mock-bar-row">
                         <span class="mock-cat">{{ cat.name }}</span>
                         <div class="mock-bar-track">
-                            <div class="mock-bar" data-category="{{ cat.name|lower }}" style="width: {{ cat.percent }}%"></div>
+                            <div class="mock-bar" data-category="{{ cat.name|lower }}" style="width: {{ cat.pct }}%"></div>
                         </div>
                         <span class="category-amount">₹{{ '{:,.2f}'.format(cat.amount) }}</span>
                     </div>

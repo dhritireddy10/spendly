@@ -1,6 +1,6 @@
 import os
 import sqlite3
-from datetime import date
+from datetime import date, timedelta
 
 from werkzeug.security import generate_password_hash
 
@@ -102,17 +102,19 @@ def seed_db():
     user_id = cursor.lastrowid
 
     today = date.today()
-    year_month = today.strftime("%Y-%m")
+
+    def days_ago(n):
+        return (today - timedelta(days=n)).isoformat()
 
     sample_expenses = [
-        (user_id, 45.50, "Food", f"{year_month}-02", "Groceries"),
-        (user_id, 12.00, "Transport", f"{year_month}-03", "Bus pass"),
-        (user_id, 89.99, "Bills", f"{year_month}-05", "Electricity bill"),
-        (user_id, 30.00, "Health", f"{year_month}-08", "Pharmacy"),
-        (user_id, 15.75, "Entertainment", f"{year_month}-10", "Movie tickets"),
-        (user_id, 60.25, "Shopping", f"{year_month}-14", "New shoes"),
-        (user_id, 8.50, "Other", f"{year_month}-17", "Miscellaneous"),
-        (user_id, 22.30, "Food", f"{year_month}-20", "Restaurant"),
+        (user_id, 2450.00, "Food", days_ago(1), "Groceries"),
+        (user_id, 600.00, "Transport", days_ago(3), "Metro card recharge"),
+        (user_id, 3180.00, "Bills", days_ago(5), "Electricity bill"),
+        (user_id, 940.00, "Health", days_ago(8), "Pharmacy"),
+        (user_id, 750.00, "Entertainment", days_ago(11), "Movie tickets"),
+        (user_id, 4299.00, "Shopping", days_ago(14), "New shoes"),
+        (user_id, 320.00, "Other", days_ago(17), "Miscellaneous"),
+        (user_id, 880.00, "Food", days_ago(20), "Restaurant"),
     ]
 
     conn.executemany(
