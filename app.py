@@ -112,18 +112,21 @@ def profile():
     user = get_user_by_id(session["user_id"])
 
     # Hardcoded placeholder data — real queries land in a later step
-    stats = {"total_spent": 271.79, "transaction_count": 8, "top_category": "Food"}
+    stats = {"total_spent": 12450.75, "transaction_count": 8, "top_category": "Food"}
     transactions = [
-        {"date": "2026-09-02", "description": "Groceries", "category": "Food", "amount": 45.50},
-        {"date": "2026-09-03", "description": "Bus pass", "category": "Transport", "amount": 12.00},
-        {"date": "2026-09-05", "description": "Electricity bill", "category": "Bills", "amount": 89.99},
-        {"date": "2026-09-08", "description": "Pharmacy", "category": "Health", "amount": 30.00},
+        {"date": "2026-04-12", "description": "Groceries", "category": "Food", "amount": 850.00},
+        {"date": "2026-04-11", "description": "Metro card recharge", "category": "Transport", "amount": 500.00},
+        {"date": "2026-04-10", "description": "Electricity bill", "category": "Bills", "amount": 2200.00},
+        {"date": "2026-04-09", "description": "Doctor visit", "category": "Health", "amount": 800.00},
+        {"date": "2026-04-08", "description": "Netflix subscription", "category": "Entertainment", "amount": 649.00},
     ]
     categories = [
-        {"name": "Food", "amount": 67.80, "percent": 25},
-        {"name": "Bills", "amount": 89.99, "percent": 33},
-        {"name": "Transport", "amount": 12.00, "percent": 4},
-        {"name": "Health", "amount": 30.00, "percent": 11},
+        {"name": "Shopping", "amount": 3200.00, "percent": 100},
+        {"name": "Other", "amount": 2801.75, "percent": 88},
+        {"name": "Food", "amount": 2300.00, "percent": 72},
+        {"name": "Bills", "amount": 2200.00, "percent": 69},
+        {"name": "Health", "amount": 800.00, "percent": 25},
+        {"name": "Entertainment", "amount": 649.00, "percent": 20},
     ]
 
     return render_template(
