@@ -1,0 +1,192 @@
+/* ------------------------------------------------------------------ */
+/* Profile page                                                        */
+/* ------------------------------------------------------------------ */
+
+.profile-page {
+    padding: 3rem 2rem 5rem;
+}
+
+.profile-container {
+    max-width: 900px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+/* User info card */
+
+.profile-card {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    padding: 2rem;
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.profile-avatar {
+    flex-shrink: 0;
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: var(--paper);
+    font-family: var(--font-display);
+    font-size: 1.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.profile-name {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    color: var(--ink);
+    margin-bottom: 0.25rem;
+}
+
+.profile-email {
+    font-size: 0.9rem;
+    color: var(--ink-muted);
+    margin-bottom: 0.25rem;
+}
+
+.profile-since {
+    font-size: 0.8rem;
+    color: var(--ink-faint);
+}
+
+/* Stats row (reuses .mock-stat cells from style.css) */
+
+.profile-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.25rem;
+}
+
+.profile-stats .mock-stat {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+}
+
+/* Section wrapper */
+
+.profile-section-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    color: var(--ink);
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.profile-section-title svg {
+    width: 20px;
+    height: 20px;
+    color: var(--accent);
+}
+
+.mock-stat-label {
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.mock-stat-label svg {
+    width: 16px;
+    height: 16px;
+    color: var(--ink-faint);
+}
+
+/* Transaction table */
+
+.profile-table-wrap {
+    background: var(--paper-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-md);
+    overflow-x: auto;
+}
+
+.profile-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.9rem;
+}
+
+.profile-table th,
+.profile-table td {
+    padding: 0.85rem 1.25rem;
+    text-align: left;
+    white-space: nowrap;
+}
+
+.profile-table th {
+    color: var(--ink-muted);
+    font-weight: 500;
+    font-size: 0.8rem;
+    border-bottom: 1px solid var(--border);
+}
+
+.profile-table tbody tr {
+    border-bottom: 1px solid var(--border-soft);
+    transition: background 0.15s;
+}
+
+.profile-table tbody tr:last-child {
+    border-bottom: none;
+}
+
+.profile-table tbody tr:hover {
+    background: var(--paper-warm);
+}
+
+.profile-table .col-amount {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    color: var(--ink);
+}
+
+/* Category badges */
+
+.category-badge {
+    display: inline-block;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    font-size: 0.75rem;
+    font-weight: 500;
+    background: var(--accent-light);
+    color: var(--accent);
+}
+
+.category-badge[data-category="bills"] { background: var(--accent-2-light); color: var(--accent-2); }
+.category-badge[data-category="transport"] { background: var(--border-soft); color: var(--badge-blue); }
+.category-badge[data-category="health"] { background: var(--border-soft); color: var(--badge-purple); }
+
+/* Category breakdown bars */
+
+.profile-section .mock-bars .mock-bar-row {
+    grid-template-columns: 80px 1fr 70px;
+}
+
+.mock-bar[data-category="food"] { background: var(--accent-2); }
+.mock-bar[data-category="bills"] { background: var(--badge-purple); }
+.mock-bar[data-category="transport"] { background: var(--badge-blue); }
+.mock-bar[data-category="health"] { background: var(--accent); }
+
+.category-amount {
+    font-size: 0.85rem;
+    color: var(--ink-muted);
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+    min-width: 70px;
+}
+
+/* Responsive */
+
+@media (max-width: 700px) {
+    .profile-stats { grid-template-columns: 1fr; }
+    .profile-card { flex-direction: column; text-align: center; }
+}

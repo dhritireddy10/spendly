@@ -19,6 +19,9 @@
     --border: #e4e1da;
     --border-soft: #eeebe4;
 
+    --badge-blue: #3b7dd8;
+    --badge-purple: #7a5fc4;
+
     --font-display: 'DM Serif Display', Georgia, serif;
     --font-body: 'DM Sans', system-ui, sans-serif;
 
@@ -102,6 +105,8 @@ a { color: inherit; text-decoration: none; }
 
 .nav-links a { color: var(--ink-muted); transition: color 0.2s; }
 .nav-links a:hover { color: var(--ink); }
+
+.nav-user { color: var(--ink-soft); font-weight: 500; }
 
 .nav-cta {
     background: var(--ink) !important;
@@ -303,8 +308,8 @@ a { color: inherit; text-decoration: none; }
 }
 
 .mock-bar-food { background: var(--accent-2); }
-.mock-bar-travel { background: #3b7dd8; }
-.mock-bar-bills { background: #7a5fc4; }
+.mock-bar-travel { background: var(--badge-blue); }
+.mock-bar-bills { background: var(--badge-purple); }
 
 /* ------------------------------------------------------------------ */
 /* Buttons                                                             */
