@@ -3,6 +3,20 @@ from datetime import datetime
 from database.db import get_db
 
 
+def _date_bounds_clause(start_date=None, end_date=None):
+    # clause is always a fixed literal (never built from user input) — only the
+    # date values themselves flow into the query, via `params`/`?` placeholders.
+    clause = ""
+    params = []
+    if start_date:
+        clause += " AND date >= ?"
+        params.append(start_date)
+    if end_date:
+        clause += " AND date <= ?"
+        params.append(end_date)
+    return clause, params
+
+
 def get_user_by_id(user_id):
     conn = get_db()
     row = conn.execute(
@@ -22,22 +36,29 @@ def get_user_by_id(user_id):
     }
 
 
-def get_summary_stats(user_id):
+def get_summary_stats(user_id, start_date=None, end_date=None):
     conn = get_db()
+    clause, extra_params = _date_bounds_clause(start_date, end_date)
 
     total_row = conn.execute(
-        "SELECT COALESCE(SUM(amount), 0) AS total, COUNT(*) AS count "
-        "FROM expenses WHERE user_id = ?",
-        (user_id,),
+        f"""
+        SELECT COALESCE(SUM(amount), 0) AS total, COUNT(*) AS count
+        FROM expenses
+        WHERE user_id = ?{clause}
+        """,
+        (user_id, *extra_params),
     ).fetchone()
 
     top_category_row = conn.execute(
-        "SELECT category, SUM(amount) AS category_total "
-        "FROM expenses WHERE user_id = ? "
-        "GROUP BY category "
-        "ORDER BY category_total DESC "
-        "LIMIT 1",
-        (user_id,),
+        f"""
+        SELECT category, SUM(amount) AS category_total
+        FROM expenses
+        WHERE user_id = ?{clause}
+        GROUP BY category
+        ORDER BY category_total DESC
+        LIMIT 1
+        """,
+        (user_id, *extra_params),
     ).fetchone()
 
     conn.close()
@@ -53,33 +74,35 @@ def get_summary_stats(user_id):
     }
 
 
-def get_recent_transactions(user_id, limit=10):
+def get_recent_transactions(user_id, limit=10, start_date=None, end_date=None):
     conn = get_db()
+    clause, extra_params = _date_bounds_clause(start_date, end_date)
     rows = conn.execute(
-        """
+        f"""
         SELECT date, description, category, amount
         FROM expenses
-        WHERE user_id = ?
+        WHERE user_id = ?{clause}
         ORDER BY date DESC, created_at DESC, id DESC
         LIMIT ?
         """,
-        (user_id, limit),
+        (user_id, *extra_params, limit),
     ).fetchall()
     conn.close()
     return [dict(row) for row in rows]
 
 
-def get_category_breakdown(user_id):
+def get_category_breakdown(user_id, start_date=None, end_date=None):
     conn = get_db()
+    clause, extra_params = _date_bounds_clause(start_date, end_date)
     rows = conn.execute(
-        """
+        f"""
         SELECT category, SUM(amount) AS total
         FROM expenses
-        WHERE user_id = ?
+        WHERE user_id = ?{clause}
         GROUP BY category
         ORDER BY total DESC
         """,
-        (user_id,),
+        (user_id, *extra_params),
     ).fetchall()
     conn.close()
 
