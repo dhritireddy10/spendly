@@ -75,6 +75,31 @@
     margin-bottom: 0;
 }
 
+.profile-filter-quick {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.profile-filter-quick-btn {
+    background: var(--paper);
+    color: var(--ink-soft);
+    border: 1px solid var(--border);
+    border-radius: 999px;
+    padding: 0.35rem 0.9rem;
+    font-family: var(--font-body);
+    font-size: 0.8rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.profile-filter-quick-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+}
+
 .profile-filter-clear {
     font-size: 0.85rem;
     color: var(--ink-muted);
