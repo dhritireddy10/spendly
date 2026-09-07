@@ -1,4 +1,5 @@
 import sqlite3
+from datetime import datetime
 
 from flask import Flask, render_template, request, redirect, url_for, flash, abort, session
 from werkzeug.security import check_password_hash
@@ -112,15 +113,32 @@ def logout():
     return redirect(url_for("login"))
 
 
+def _parse_date_param(value):
+    if not value:
+        return None
+    try:
+        # Only used to validate the format; the original string is returned
+        # since expenses.date is stored as ISO text, not a datetime object.
+        datetime.strptime(value, "%Y-%m-%d")
+    except ValueError:
+        return None
+    return value
+
+
 @app.route("/profile")
 def profile():
     if not session.get("user_id"):
         return redirect(url_for("login"))
 
+    start_date = _parse_date_param(request.args.get("start_date"))
+    end_date = _parse_date_param(request.args.get("end_date"))
+    if start_date and end_date and end_date < start_date:
+        end_date = None
+
     user = get_profile_user(session["user_id"])
-    stats = get_summary_stats(session["user_id"])
-    transactions = get_recent_transactions(session["user_id"])
-    categories = get_category_breakdown(session["user_id"])
+    stats = get_summary_stats(session["user_id"], start_date=start_date, end_date=end_date)
+    transactions = get_recent_transactions(session["user_id"], start_date=start_date, end_date=end_date)
+    categories = get_category_breakdown(session["user_id"], start_date=start_date, end_date=end_date)
 
     return render_template(
         "profile.html",
@@ -128,6 +146,8 @@ def profile():
         stats=stats,
         transactions=transactions,
         categories=categories,
+        start_date=start_date,
+        end_date=end_date,
     )
 
 

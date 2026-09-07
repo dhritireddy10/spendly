@@ -19,6 +19,21 @@
             </div>
         </div>
 
+        <form class="profile-filter" method="get" action="{{ url_for('profile') }}">
+            <div class="form-group">
+                <label for="start_date">From</label>
+                <input type="date" id="start_date" name="start_date" class="form-input" value="{{ start_date or '' }}">
+            </div>
+            <div class="form-group">
+                <label for="end_date">To</label>
+                <input type="date" id="end_date" name="end_date" class="form-input" value="{{ end_date or '' }}">
+            </div>
+            <button type="submit" class="btn-primary">Apply</button>
+            {% if start_date or end_date %}
+            <a href="{{ url_for('profile') }}" class="profile-filter-clear">Clear filter</a>
+            {% endif %}
+        </form>
+
         <div class="profile-stats">
             <div class="mock-stat">
                 <span class="mock-stat-label">Total spent</span>
